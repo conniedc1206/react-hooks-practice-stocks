@@ -5,6 +5,7 @@ import SearchBar from "./SearchBar";
 
 function MainContainer() {
   const [stocks, setStocks] = useState([]);
+  const [portfolio, setPortfolio] = useState([]);
 
   useEffect(() => {
     fetch("http://localhost:3001/stocks")
@@ -13,15 +14,22 @@ function MainContainer() {
   }, []);
   console.log(stocks);
 
+ const handleStockAdd = (stockObj) => {
+   setPortfolio([...portfolio, stockObj])
+  //portfolio and setPortfolio uses key/id of Stock clicked
+ }
+
   return (
     <div>
       <SearchBar />
       <div className="row">
         <div className="col-8">
-          <StockContainer stocks={stocks}/>
+          <StockContainer stocks={stocks} onStockAdd={handleStockAdd}/>
         </div>
         <div className="col-4">
-          <PortfolioContainer />
+          <PortfolioContainer 
+          portfolio={portfolio}
+          />
         </div>
       </div>
     </div>
